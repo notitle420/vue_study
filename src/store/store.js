@@ -1,27 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import memo from '@/store/modules/memo'
+import memos from './modules/memos';
+import user from './modules/user';
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-    memos: [
-      { id: 1, title: '...', description: '...', platforms: ['...'], million: false, releasedAt: new Date() },
-      { id: 2, title: '...', description: '...', platforms: ['...'], million: false, releasedAt: new Date() },
-      { id: 3, title: '...', description: '...', platforms: ['...'], million: false, releasedAt: new Date() },
-      // ...省略 ...
-      { id: 14, title: '...', description: '...', platforms: ['...'], million: false, releasedAt: new Date() }
-    ],
-    nextId: 15
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-    // ここにアクションを記述
-  },
+const store = new Vuex.Store({
   modules: {
-    // ここにモジュールを記述
-  }
+    memo: memo,
+    memos: memos,
+    user: user
+  },
+  strict: process.env.NODE_ENV !== 'production'
 })
+
+export default store

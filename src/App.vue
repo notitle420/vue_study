@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <CommonHeader />
-    <img alt="Vue logo" src="@/assets/logo.png" width="300" height="300" />
     <router-view />
   </div>
 </template>

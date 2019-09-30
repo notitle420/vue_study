@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home.vue'
 import About from '@/views/About.vue'
-import MemoList from '@/components/MemoList'
+import MemoList from '@/views/MemoList'
+import MemoDetails from '@/views/MemoDetails'
 
 Vue.use(Router)
 
@@ -24,11 +25,20 @@ export default new Router({
       component: About
     },
     {
-      path: '/memo',
+      path: '/memo-list',
       name: 'MemoList',
       component: MemoList,
       meta: {
         title: 'memo list'
+      }
+    },
+    {
+      path: '/memo/:id',
+      name: 'MemoDetails',
+      component: MemoDetails,
+      props: true,
+      meta: {
+        title: 'details of memo'
       }
     }
   ]
