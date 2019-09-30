@@ -48,11 +48,11 @@ export default {
   methods: {
     init() {
       this.$store.dispatch("memos/clear");
-      this.$store.dispatch("user/clear");
+      //this.$store.dispatch("user/clear");
     },
     start() {
       this.$store.dispatch("memos/startListener");
-      this.$store.dispatch("user/startListener");
+      //this.$store.dispatch("user/startListener");
     },
     stop() {
       this.$store.dispatch("memos/stopListener");
