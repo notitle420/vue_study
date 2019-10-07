@@ -7,7 +7,7 @@ export default {
     million: false,
     releasedAt: null
   },
-  NEW_EMPTY_MEMO() {
+  NEW_EMPTY_ART() {
     return {
       id: 0,
       title: '',

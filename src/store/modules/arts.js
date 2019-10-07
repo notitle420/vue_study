@@ -1,9 +1,9 @@
-import firestore from '@/firebase/firestore'
-import { MEMOS_INIT, MEMOS_ADD, MEMOS_SET, MEMOS_REMOVE } from '@/store/modules/mutation-types'
+import firebase from '@/firebase/firebase'
+import { ARTS_INIT, ARTS_ADD, ARTS_SET, ARTS_REMOVE } from '@/store/modules/mutation-types'
 
 // firebase.firestore.Firestore.collection(collectionPath)
 // returns firebase.firestore.CollectionReference
-const memosRef = firestore.collection('memos')
+const artsRef = firebase.firestore().collection('memos')
 
 export default {
   namespaced: true,
@@ -14,23 +14,23 @@ export default {
     }
   },
   mutations: {
-    [MEMOS_INIT](state, payload) {
+    [ARTS_INIT](state, payload) {
       state.data = payload
     },
-    [MEMOS_ADD](state, payload) {
+    [ARTS_ADD](state, payload) {
       state.data.push(payload)
       state.data.sort((a, b) => {
         return a.releasedAt.getTime() - b.releasedAt.getTime()
       })
     },
-    [MEMOS_SET](state, payload) {
-      const index = state.data.findIndex(memo => memo.id === payload.id)
+    [ARTS_SET](state, payload) {
+      const index = state.data.findIndex(art => art.id === payload.id)
       if (index !== -1) {
         state.data[index] = payload
       }
     },
-    [MEMOS_REMOVE](state, payload) {
-      const index = state.data.findIndex(memo => memo.id === payload.id)
+    [ARTS_REMOVE](state, payload) {
+      const index = state.data.findIndex(art => art.id === payload.id)
       if (index !== -1) {
         state.data.splice(index, 1)
       }
@@ -43,7 +43,7 @@ export default {
   },
   actions: {
     clear({ commit }) {
-      commit(MEMOS_INIT, [])
+      commit(ARTS_INIT, [])
     },
     startListener({ commit }) {
       console.log('start listener')
@@ -52,7 +52,7 @@ export default {
         this.unsubscribe()
         this.unsubscribe = null
       }
-      this.unsubscribe = memosRef.orderBy('releasedAt', 'asc')
+      this.unsubscribe = artsRef.orderBy('releasedAt', 'asc')
         // firebase.firestore.QuerySnapshot
         .onSnapshot(querySnapshot => {
           querySnapshot.docChanges().forEach(change => {
@@ -65,11 +65,11 @@ export default {
               releasedAt: new Date(change.doc.data().releasedAt.seconds * 1000)
             }
             if (change.type === 'added') {
-              commit(MEMOS_ADD, payload)
+              commit(ARTS_ADD, payload)
             } else if (change.type === 'modified') {
-              commit(MEMOS_SET, payload)
+              commit(ARTS_SET, payload)
             } else if (change.type === 'removed') {
-              commit(MEMOS_REMOVE, payload)
+              commit(ARTS_REMOVE, payload)
             }
           })
         },
@@ -85,8 +85,8 @@ export default {
         this.unsubscribe = null
       }
     },
-    addMemo({ commit }, payload) {
-      memosRef.add(payload)
+    addArt({ commit }, payload) {
+      artsRef.add(payload)
         .then(doc => {
           // Do not mutate vuex store state outside mutation handlers.
         })
@@ -94,8 +94,8 @@ export default {
           console.error('Error adding document: ', err)
         })
     },
-    deleteMemo({ commit }, payload) {
-      memosRef.doc(payload.id).delete()
+    deleteArt({ commit }, payload) {
+      artsRef.doc(payload.id).delete()
         .then(() => {
           // Do not mutate vuex store state outside mutation handlers.
         })

@@ -1,42 +1,41 @@
 import CONSTANTS from '@/constants'
-import firestore from '@/firebase/firestore'
+import firebase from '@/firebase/firebase'
 import { USER_SET } from '@/store/modules/mutation-types'
 
 // firebase.firestore.Firestore.collection(collectionPath)
 // returns firebase.firestore.CollectionReference
-const userRef = firestore.collection('users')
+const userRef = firebase.firestore().collection('users')
 
 export default {
   namespaced: true,
   unsubscribe: null,
-  state: {
-    userdata: {
-      id: 0,
-      name: "aaaa"
+  state() {
+    return {
+      data: {}
     }
   },
   mutations: {
     [USER_SET](state, payload) {
-      state.userdata = payload
+      state = payload
     }
   },
   getters: {
     data(state) {
-      return state.userdata
+      return state.data
     }
   },
   actions: {
     clear({ commit }) {
       commit(USER_SET, CONSTANTS.NEW_EMPTY_USER())
     },
-    startListener({ commit }) {
+    startListener({ commit }, payload) {
       console.log('start Listener')
       if (this.unsubscribe) {
         console.warn('listener is running. ', this.unsubscribe)
         this.unsubscribe()
         this.unsubscribe = null
       }
-      this.unsubscribe = userRef.doc("test")
+      this.unsubscribe = userRef.doc(payload.id)
         // DocumentSnapshot
         .onSnapshot(docSnapshot => {
           let payload = null

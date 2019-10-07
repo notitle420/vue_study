@@ -2,9 +2,9 @@
   <div class="details container-fluent text-center">
     <div class="row justify-content-start">
       <div class="col">
-        <div class="card" v-if="memo.id">
+        <div class="card" v-if="art.id">
           <div class="card-header text-left">
-            <h5 class="card-title">{{ memo.title }}</h5>
+            <h5 class="card-title">{{ art.title }}</h5>
             <h6 class="card-subtitle text-muted">
               Platform:
               <a
@@ -26,8 +26,8 @@
           <div class="card-footer text-right">
             <button
               class="btn"
-              v-bind:class="{'btn-primary': memo.million, 'btn-success': !memo.million}"
-              v-on:click="updateMillion(memo.million)"
+              v-bind:class="{'btn-primary': art.million, 'btn-success': !art.million}"
+              v-on:click="updateMillion(art.million)"
             >{{ millionButtonLabel }}</button>
             <button class="btn btn-primary" v-on:click="historyBack">back</button>
           </div>
@@ -41,7 +41,7 @@
 import CONSTANTS from "@/constants";
 
 export default {
-  name: "MemoDetails",
+  name: "ArtDetails",
   data() {
     return {
       targetId: this.id
@@ -82,29 +82,29 @@ export default {
   },
   methods: {
     init() {
-      this.$store.dispatch("memo/clear");
+      this.$store.dispatch("art/clear");
     },
     start() {
-      this.$store.dispatch("memo/startListener", { id: this.targetId });
+      this.$store.dispatch("art/startListener", { id: this.targetId });
     },
     stop() {
-      this.$store.dispatch("memo/stopListener");
+      this.$store.dispatch("art/stopListener");
     },
     updateMillion(million) {
-      this.$store.dispatch("memo/updateMillion");
+      this.$store.dispatch("art/updateMillion");
     },
     updatePlatform(platform) {
       this.$store
-        .dispatch("memo/updatePlatforms", { platform: platform })
+        .dispatch("art/updatePlatforms", { platform: platform })
         .then(() => {
-          console.log("memo/updatePlatforms");
+          console.log("art/updatePlatforms");
         });
     },
     getTargetPlatformClass(platform) {
-      if (!this.memo.platforms || this.memo.platforms.length === 0) {
+      if (!this.art.platforms || this.art.platforms.length === 0) {
         return "badge-dark";
       }
-      return this.memo.platforms.includes(platform)
+      return this.art.platforms.includes(platform)
         ? "badge-info"
         : "badge-dark";
     },
@@ -113,34 +113,34 @@ export default {
     }
   },
   computed: {
-    memo() {
-      return this.$store.getters["memo/data"];
+    art() {
+      return this.$store.getters["art/data"];
     },
     platforms() {
       return CONSTANTS.PLATFORMS;
     },
     formatedDescription() {
-      if (!this.memo.description) {
+      if (!this.art.description) {
         return "";
       }
-      return this.memo.description
+      return this.art.description
         .replace("『", '<span class="badge-lg badge-pill badge-success p-1">')
         .replace("』", "</span>");
     },
     formatedReleasedAt() {
-      if (!this.memo.releasedAt) {
+      if (!this.art.releasedAt) {
         return "";
       }
-      return this.$moment(this.memo.releasedAt).format("YYYY/MM/DD");
+      return this.$moment(this.art.releasedAt).format("YYYY/MM/DD");
     },
     millionButtonLabel() {
-      return !this.memo.million ? "is Million ?" : "is not Million ?";
+      return !this.art.million ? "is Million ?" : "is not Million ?";
     }
   },
   watch: {
-    memo(n, o) {
+    art(n, o) {
       if (!n) {
-        this.$router.push("/memo-list");
+        this.$router.push("/art-list");
       }
     }
   }

@@ -11,6 +11,8 @@ import 'vue-croppa/dist/vue-croppa.css'
 
 Vue.config.productionTip = false
 
+
+
 Vue.use(moment)
 Vue.use(BootstrapVue)
 Vue.use(Croppa)

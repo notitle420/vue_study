@@ -1,9 +1,9 @@
 <template>
   <div class="card m-2" style="width: 14rem">
     <h5 class="card-title">
-      <p v-bind:class="pClass">{{ memo.id }}</p>
+      <p v-bind:class="pClass">{{ art.id }}</p>
     </h5>
-    <router-link v-bind:to="{name: 'MemoDetails', params:{ id: memo.id }}">
+    <router-link v-bind:to="{name: 'ArtDetails', params:{ id: art.id }}">
       <img class="img-fluid" src="@/example/image/2.jpg" />
     </router-link>
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "MemoListCard",
+  name: "ArtCard",
   data() {
     return {
       pClass: "red"
@@ -19,23 +19,23 @@ export default {
   },
   mounted() {},
   props: {
-    memo: {
+    art: {
       type: Object
     }
   },
   methods: {},
   computed: {
     formatedTitle() {
-      if (!this.memo || !this.memo.title) {
+      if (!this.art || !this.art.title) {
         return "";
       }
-      return this.getOmissionAndPlusMidpoint(this.memo.title, 16);
+      return this.getOmissionAndPlusMidpoint(this.art.title, 16);
     },
     formatedDescription() {
-      if (!this.memo || !this.memo.description) {
+      if (!this.art || !this.art.description) {
         return "";
       }
-      return this.getOmissionAndPlusMidpoint(this.memo.description, 60);
+      return this.getOmissionAndPlusMidpoint(this.art.description, 60);
     }
   }
 };

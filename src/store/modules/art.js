@@ -1,10 +1,10 @@
 import CONSTANTS from '@/constants'
-import firestore from '@/firebase/firestore'
-import { MEMO_SET } from '@/store/modules/mutation-types'
+import firebase from '@/firebase/firebase'
+import { ART_SET } from '@/store/modules/mutation-types'
 
 // firebase.firestore.Firestore.collection(collectionPath)
 // returns firebase.firestore.CollectionReference
-const memosRef = firestore.collection('memos')
+const memosRef = firebase.firestore().collection('memos')
 
 export default {
   namespaced: true,
@@ -15,7 +15,7 @@ export default {
     }
   },
   mutations: {
-    [MEMO_SET](state, payload) {
+    [ART_SET](state, payload) {
       state.data = payload
     }
   },
@@ -26,7 +26,7 @@ export default {
   },
   actions: {
     clear({ commit }) {
-      commit(MEMO_SET, CONSTANTS.NEW_EMPTY_MEMO())
+      commit(ART_SET, CONSTANTS.NEW_EMPTY_ART())
     },
     startListener({ commit }, payload) {
       console.log('start Listener')
@@ -49,7 +49,7 @@ export default {
               releasedAt: new Date(docSnapshot.data().releasedAt.seconds * 1000)
             }
           }
-          commit(MEMO_SET, payload)
+          commit(ART_SET, payload)
         })
     },
     stopListener() {

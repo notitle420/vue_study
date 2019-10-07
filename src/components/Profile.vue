@@ -12,13 +12,26 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
-  props: {
-    user: {
-      type: Object
+  mounted() {
+    this.init();
+    this.start();
+  },
+  props: {},
+  methods: {
+    init() {
+      this.$store.dispatch("user/clear");
+    },
+    start() {
+      this.$store.dispatch("user/startListener", { id: "test" });
+    },
+    stop() {
+      this.$store.dispatch("user/stopListener");
     }
   },
-  methods: {},
-  computed: {}
+  computed: {
+    user() {
+      return this.$store.getters["user/data"];
+    }
+  }
 };
 </script>

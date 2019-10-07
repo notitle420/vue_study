@@ -5,31 +5,31 @@
     </div>
     <div class="float-left">
       <div class="row justify-content-start">
-        <art-list-card v-for="(memo, index) in memos" v-bind:key="`f-${index}`" v-bind:memo="memo" />
+        <art-list-card v-for="(art, index) in arts" v-bind:key="`f-${index}`" v-bind:art="art" />
       </div>
       <div class="row">
         <button
           class="btn-sm btn-dark m-1"
-          v-for="(memo, index) in memos"
+          v-for="(art, index) in arts"
           v-bind:key="`s-${index}`"
-          v-on:click="remove(memo.id)"
-        >{{ memo.id }}</button>
+          v-on:click="remove(art.id)"
+        >{{ art.id }}</button>
       </div>
     </div>
-    <memo-list-form />
+    <art-list-form />
   </div>
 </template>
 
 <script>
 import Profile from "@/components/Profile";
-import MemoListCard from "@/components/MemoListCard";
-import MemoListForm from "@/components/MemoListForm";
+import ArtCard from "@/components/ArtCard";
+import ArtForm from "@/components/ArtForm";
 export default {
-  name: "MemoList",
+  name: "ArtList",
   components: {
     profile: Profile,
-    "art-list-card": MemoListCard,
-    "memo-list-form": MemoListForm
+    "art-list-card": ArtCard,
+    "art-list-form": ArtForm
   },
   data() {
     return {};
@@ -47,30 +47,28 @@ export default {
   },
   methods: {
     init() {
-      this.$store.dispatch("memos/clear");
-      this.$store.dispatch("user/clear");
+      this.$store.dispatch("arts/clear");
     },
     start() {
-      this.$store.dispatch("memos/startListener");
-      this.$store.dispatch("user/startListener");
+      this.$store.dispatch("arts/startListener");
     },
     stop() {
-      this.$store.dispatch("memos/stopListener");
+      this.$store.dispatch("arts/stopListener");
     },
     remove(id) {
-      this.$store.dispatch("memos/deleteMemo", { id });
+      this.$store.dispatch("arts/deleteArt", { id });
     }
   },
   computed: {
-    memos() {
-      return this.$store.getters["memos/data"];
+    arts() {
+      return this.$store.getters["arts/data"];
     }
   }
 };
 </script>
 
 <style scoped>
-.memo-list {
+.art-list {
   text-align: center;
 }
 .row {
