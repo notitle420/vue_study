@@ -4,11 +4,13 @@ import Home from '@/views/Home.vue'
 import About from '@/views/About.vue'
 import ArtsList from '@/views/ArtsList'
 import ArtDetails from '@/views/ArtDetails'
-import SignUp from '@/components/SignUp'
+import SignUp from '@/views/SignUp'
+import SignIn from '@/views/SignIn'
+import firebase from '@/firebase/firebase'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -23,12 +25,17 @@ export default new Router({
       component: SignUp
     },
     {
+      path: '/signin',
+      name: 'SignIp',
+      component: SignIn
+    },
+    {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: About
+      component: About,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/arts',
@@ -49,3 +56,24 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  if (requiresAuth) {
+    console.log(requiresAuth)
+    // このルートはログインされているかどうか認証が必要です。
+    // もしされていないならば、ログインページにリダイレクトします。
+    firebase.auth().onAuthStateChanged(function (user) {
+      console.log(user)
+      if (user !== null) {
+        next()
+      } else {
+        next('/signup')
+      }
+    })
+  } else {
+    next() // next() を常に呼び出すようにしてください!
+  }
+})
+
+export default router

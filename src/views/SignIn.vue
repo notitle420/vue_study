@@ -1,21 +1,20 @@
 <template>
-  <div class="signup">
-    <h2>Sign up</h2>
+  <div class="signin">
+    <h2>Sign in</h2>
     <input type="text" placeholder="Username" v-model="username" />
     <input type="password" placeholder="Password" v-model="password" />
-    <button @click="signUp">Register</button>
+    <button @click="signIn">SignIn</button>
     <p>
-      Do you have an account?
-      <router-link to="/signin">sign in now!!</router-link>
+      You don't have an account?
+      <router-link to="/signup">create account now!!</router-link>
     </p>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
-
+import firebase from "@/firebase/firebase";
 export default {
-  name: "Signup",
+  name: "Signin",
   data() {
     return {
       username: "",
@@ -23,16 +22,19 @@ export default {
     };
   },
   methods: {
-    signUp: function() {
+    signIn: function() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.username, this.password)
-        .then(user => {
-          alert("Create account: ", user.email);
-        })
-        .catch(error => {
-          alert(error.message);
-        });
+        .signInWithEmailAndPassword(this.username, this.password)
+        .then(
+          user => {
+            alert("Success!");
+            this.$router.push("/");
+          },
+          err => {
+            alert(err.message);
+          }
+        );
     }
   }
 };
@@ -55,7 +57,7 @@ li {
 a {
   color: #42b983;
 }
-.signup {
+.signin {
   margin-top: 20px;
 
   display: flex;

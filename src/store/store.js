@@ -10,7 +10,7 @@ const store = new Vuex.Store({
   modules: {
     art: art,
     arts: arts,
-    user: user
+    user: user,
   },
   strict: process.env.NODE_ENV !== 'production'
 })
