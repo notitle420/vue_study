@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue'
 import About from '@/views/About.vue'
 import ArtsList from '@/views/ArtsList'
 import ArtDetails from '@/views/ArtDetails'
+import ArtForm from '@/views/ArtForm'
 import SignUp from '@/views/SignUp'
 import SignIn from '@/views/SignIn'
 import firebase from '@/firebase/firebase'
@@ -43,6 +44,14 @@ let router = new Router({
       component: ArtsList,
       meta: {
         title: 'memo list'
+      }
+    },
+    {
+      path: '/artform',
+      name: 'ArtForm',
+      component: ArtForm,
+      meta: {
+        title: 'art form'
       }
     },
     {

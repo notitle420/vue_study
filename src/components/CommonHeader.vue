@@ -5,6 +5,7 @@
       <router-link to="/about" class="badge badge-primary">About</router-link>
       <router-link to="/arts" class="badge badge-primary">Arts</router-link>
       <router-link to="/signup" class="badge badge-primary">SignUp</router-link>
+      <router-link to="/artform" class="badge badge-primary">Form</router-link>
     </div>
   </header>
 </template>

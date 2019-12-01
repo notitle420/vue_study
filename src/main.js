@@ -8,7 +8,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import moment from 'vue-moment'
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
-
 Vue.config.productionTip = false
 
 

@@ -1,6 +1,5 @@
 <template>
   <div class="signup">
-    >
     <h2>Sign up</h2>
     <div class="w-50">
       <b-form-input v-model="userId" placeholder="UserID"></b-form-input>
@@ -29,7 +28,7 @@ export default {
       password: "",
       selected: null,
       userType: [
-        { value: null, text: "---Are You?" },
+        { value: null, text: "---Are You?---" },
         { value: `creator`, text: `Creator` },
         { value: `owner`, text: `Owner` }
       ]
@@ -91,7 +90,6 @@ a {
 }
 .signup {
   margin-top: 20px;
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
